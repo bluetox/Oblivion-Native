@@ -1,0 +1,25 @@
+<!-- res/values/themes.xml -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base Material 3 dark theme -->
+    <style name="Theme.Oblivion" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary / Secondary -->
+        <item name="colorPrimary">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white_100</item>
+        <item name="colorSecondary">@color/purple_500</item>
+        <item name="colorOnSecondary">@color/white_100</item>
+
+        <!-- Background / Surface -->
+        <item name="colorSurface">@color/dark_800</item>
+        <item name="colorOnSurface">@color/white_100</item>
+        <item name="colorSurfaceVariant">@color/dark_700</item>
+        <item name="colorOnSurfaceVariant">@color/white_100</item>
+
+        <!-- Error / Tertiary -->
+        <item name="colorError">#CF6679</item>
+        <item name="colorOnError">@color/white_100</item>
+        <item name="colorTertiary">@color/electric_blue</item>
+        <item name="colorOnTertiary">@color/dark_900</item>
+    </style>
+
+</resources>
