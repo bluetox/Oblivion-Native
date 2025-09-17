@@ -60,19 +60,13 @@
 
         <!-- Chat list -->
         <LinearLayout
+            android:id="@+id/chatList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="4dp"
             android:divider="@android:color/transparent"
             android:showDividers="middle"
-            android:dividerPadding="8dp">
-
-            <include layout="@layout/chat_item"/>
-            <include layout="@layout/chat_item"/>
-            <include layout="@layout/chat_item"/>
-            <include layout="@layout/chat_item"/>
-            <include layout="@layout/chat_item"/>
-        </LinearLayout>
+            android:dividerPadding="8dp"/>
     </LinearLayout>
 </FrameLayout>
