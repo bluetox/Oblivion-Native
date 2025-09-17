@@ -10,22 +10,24 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 
 class MainActivity : AppCompatActivity() {
-
+    /*
     init {
         System.loadLibrary("pure_dsa")
     }
 
     external fun generate_keypair_mode3(pk: ByteArray, sk: ByteArray)
-
+*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-
+        /*
         val pk = ByteArray(1952) // Mode3::PUBLIC_KEY_BYTES
         val sk = ByteArray(4032) // Mode3::SECRET_KEY_BYTES
         generate_keypair_mode3(pk, sk)
-
+        */
+        hideSystemBars()
         loadFragment(HomeFragment())
     }
 
