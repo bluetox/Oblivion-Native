@@ -10,8 +10,8 @@
         android:padding="20dp"
         android:background="@color/dark_600">
         <ImageView
-            android:id="@+id/backArrow"
             android:layout_width="32dp"
+            android:id="@+id/arrowBackIcon"
             android:layout_height="32dp"
             android:src="@drawable/arrow_back_24dp"
             android:clickable="true"

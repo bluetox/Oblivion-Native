@@ -20,7 +20,7 @@ class ChatFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val goBackArrow = view.findViewById<ImageView>(R.id.backArrow)
+        val goBackArrow = view.findViewById<ImageView>(R.id.arrowBackIcon)
         goBackArrow.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(
