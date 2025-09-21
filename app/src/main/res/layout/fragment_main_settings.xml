@@ -1,34 +1,86 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_900">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/dark_purple_950">
+
+    <!-- Top bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="20dp"
-        android:background="@color/dark_600">
+        android:padding="20dp">
+
         <ImageView
+            android:id="@+id/arrowBackIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/arrow_back_24dp"
+            android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <ImageView
-            android:id="@+id/moreIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/more_vert_24dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Settings"
+            android:textSize="23sp"
+            android:textColor="@color/white_100"/>
     </LinearLayout>
-</FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="20dp">
+        <LinearLayout
+            android:id="@+id/chatAvatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:background="@drawable/avatar_background">
+
+            <TextView
+                android:id="@+id/chatAvatarLetter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="B"
+                android:textSize="50dp"
+                android:textStyle="bold"
+                android:textColor="@color/white_100" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bob"
+            android:textSize="30sp"
+            android:textColor="@color/white_100"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="f29b95a171c76b855e36bf6b9662d1cb0c018a9131448f2f9a6b8e49a76a3c12"
+            android:textColor="@color/white_300"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:scrollHorizontally="false"
+
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMaxTextSize="20sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeStepGranularity="1sp"/>
+
+
+    </LinearLayout>
+    <!-- Settings row -->
+    <include
+        android:id="@+id/itemAppearance"
+        layout="@layout/item_setting_button" />
+
+</LinearLayout>

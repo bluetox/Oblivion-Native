@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "935922950231",
+    "project_id": "oblivion-d4a2b",
+    "storage_bucket": "oblivion-d4a2b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935922950231:android:e79b68244e7c99d6d5c312",
+        "android_client_info": {
+          "package_name": "com.example.oblivion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlwfKTE2ITYL9CktZnwYku0Swdg42Xq_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

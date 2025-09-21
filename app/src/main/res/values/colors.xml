@@ -13,9 +13,13 @@
     <color name="dark_700">#2E2E2E</color> <!-- cards, secondary bg -->
     <color name="dark_600">#3A3A3A</color> <!-- elevated surfaces -->
     <color name="dark_500">#505050</color> <!-- borders, dividers -->
+    <color name="dark_purple_800">#2C1440</color>
+    <color name="dark_purple_900">#1C0D29</color>
+    <color name="dark_purple_950">#0E0814</color>
 
 
     <!-- Accents -->
     <color name="electric_blue">#7DF9FF</color>
-    <color name="white_100">#FFFFFF</color>
+    <color name="white_100">#E3CEF0</color>
+    <color name="white_300">#93869C</color>
 </resources>
