@@ -16,5 +16,5 @@ object RustBridge {
     external fun loadWithProfile(user_id: String, password: String): Int
 
     external fun createChat(dst_user_id: String, chat_name: String): Int
-
+    external fun getChats(): String
 }

@@ -41,11 +41,6 @@ class HomeFragment : Fragment() {
 
         val chatList = view.findViewById<LinearLayout>(R.id.chatList)
 
-        val chats = mutableListOf(
-            Triple("Alice", "Hey, how are you?", "14:32"),
-            Triple("Bob", "See you tomorrow!", "13:10"),
-            Triple("Charlie", "Typing...", "12:58")
-        )
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.pendingDeepLink?.let { uri: Uri ->
             // Clear immediately
@@ -56,7 +51,6 @@ class HomeFragment : Fragment() {
                 Log.d("DeepLink", "Scheme matches $base64UserId")
                 if (base64UserId != null) {
                     try {
-                        chats.add(Triple(base64UserId, "Hello!", "14:32"))
                         val res = RustBridge.createChat("base64UserId", "DeeplinkChat")
                         Log.d("RUST", "CreatedChat status: $res")
                     } catch (e: IllegalArgumentException) {
@@ -67,7 +61,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-
+        var chats =
         val avatarBackgrounds = listOf(
             R.drawable.avatar_background,
         )
