@@ -79,7 +79,6 @@ class MainActivity : AppCompatActivity() {
         val callback = object : RustBridgeCallback {
             override fun onNewMessage(message: String) {
                 runOnUiThread {
-                    Log.i("RustBridge", "New message: $message")
                     listener?.onMessage(message)
                 }
             }

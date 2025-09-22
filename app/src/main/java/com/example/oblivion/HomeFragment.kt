@@ -48,24 +48,31 @@ class HomeFragment : Fragment() {
         val chatList = view.findViewById<LinearLayout>(R.id.chatList)
 
         val mainActivity = requireActivity() as? MainActivity
+
         mainActivity?.pendingDeepLink?.let { uri: Uri ->
             // Clear immediately
             mainActivity.pendingDeepLink = null
-            Log.d("DeepLink", "DeepLink Found")
+            Log.d("DeepLink", "DeepLink Found: $uri")
+
             if (uri.scheme == "oblivion" && uri.host == "add") {
-                val base64UserId = uri.lastPathSegment
-                Log.d("DeepLink", "Scheme matches $base64UserId")
-                if (base64UserId != null) {
+                val base64UserId = uri.getQueryParameter("user")
+                val chatName = uri.getQueryParameter("name") ?: "DeeplinkChat"
+
+                Log.d("DeepLink", "Params - user: $base64UserId, name: $chatName")
+
+                if (!base64UserId.isNullOrBlank()) {
                     try {
-                        val res = RustBridge.createChat("base64UserId", "DeeplinkChat")
+                        val decodedUserId = String(android.util.Base64.decode(base64UserId, android.util.Base64.DEFAULT))
+                        Log.d("DeepLink", "Calling native")
+                        val res = RustBridge.createChat(base64UserId, chatName)
                         Log.d("RUST", "CreatedChat status: $res")
                     } catch (e: IllegalArgumentException) {
-                        Log.d("DeepLink", "Invalid base64 in link: $base64UserId", e)
-
+                        Log.e("DeepLink", "Invalid base64 in link: $base64UserId", e)
                     }
                 }
             }
         }
+
 
         val json: String = RustBridge.getChats()
         val avatarBackgrounds = listOf(
