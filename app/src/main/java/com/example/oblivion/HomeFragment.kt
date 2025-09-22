@@ -12,6 +12,12 @@ import kotlin.let
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+
+
+data class ChatExport(
+    val dest_id_b64: String,
+    val name: String
+)
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
@@ -61,12 +67,14 @@ class HomeFragment : Fragment() {
             }
         }
 
-        var chats =
+        val json: String = RustBridge.getChats()
         val avatarBackgrounds = listOf(
             R.drawable.avatar_background,
         )
-
-        for ((name, message, time) in chats) {
+        // Parse JSON into Kotlin objects
+        val type = object : com.google.gson.reflect.TypeToken<List<ChatExport>>() {}.type
+        val chats: List<ChatExport> = com.google.gson.Gson().fromJson(json, type)
+        for (chat in chats) {
             val chatItem = layoutInflater.inflate(R.layout.chat_item, chatList, false)
 
             chatItem.setOnClickListener {
@@ -82,18 +90,18 @@ class HomeFragment : Fragment() {
                     .commit()
             }
 
-            chatItem.findViewById<TextView>(R.id.chatName).text = name
-            chatItem.findViewById<TextView>(R.id.chatMessage).text = message
-            chatItem.findViewById<TextView>(R.id.chatTime).text = time
+            chatItem.findViewById<TextView>(R.id.chatName).text = chat.name
+            chatItem.findViewById<TextView>(R.id.chatMessage).text = "No messages yet"  // placeholder
+            chatItem.findViewById<TextView>(R.id.chatTime).text = "" // or format last message time
 
-            // Handle avatar with letter + random gradient
+            // Avatar
             val avatarContainer = chatItem.findViewById<FrameLayout>(R.id.chatAvatar)
             val avatarLetter = chatItem.findViewById<TextView>(R.id.chatAvatarLetter)
-
-            avatarLetter.text = name.first().uppercase()   // "A" for Alice
+            avatarLetter.text = chat.name.first().uppercase()
             avatarContainer.setBackgroundResource(avatarBackgrounds.random())
 
             chatList.addView(chatItem)
+
         }
     }
 }
