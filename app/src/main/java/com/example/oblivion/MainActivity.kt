@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     init {
         System.loadLibrary("Oblivion")
     }
+    var pendingDeepLink: android.net.Uri? = null
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -55,15 +57,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private var chatFragment: ChatFragment? = null
-
     private var listener: MessageListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadFragment(HomeFragment())
+        loadFragment(ProfileMenuFragment())
 
         askNotificationPermission()
         FirebaseMessaging.getInstance().token
@@ -73,14 +73,10 @@ class MainActivity : AppCompatActivity() {
                     return@addOnCompleteListener
                 }
 
-                // Get the new FCM registration token
                 val token = task.result
-
-                // Log and toast
                 Log.d("FCM", "Token: $token")
                 Toast.makeText(this, "Token: $token", Toast.LENGTH_SHORT).show()
 
-                // TODO: Send token to your server if needed
             }
         val callback = object : RustBridgeCallback {
             override fun onNewMessage(message: String) {
@@ -90,28 +86,25 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        val dbPath = this.getDatabasePath("storage.db").absolutePath
+        RustBridge.init(dbPath, callback)
+        handleIntent(intent)
+    }
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
 
-        //RustBridge.init(callback)
+    private fun handleIntent(intent: Intent) {
+        if (intent.action == Intent.ACTION_VIEW) {
+            intent.data?.let { uri ->
+                pendingDeepLink = uri
+            }
+        }
     }
 
     fun setMessageListener(l: MessageListener?) {
         listener = l
-    }
-
-    private fun hideSystemBars() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.let { controller ->
-                controller.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
-                controller.systemBarsBehavior =
-                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        } else {
-            @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        }
     }
 
     fun loadFragment(fragment: Fragment) {

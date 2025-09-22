@@ -8,7 +8,10 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-
+import kotlin.let
+import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
@@ -38,11 +41,30 @@ class HomeFragment : Fragment() {
 
         val chatList = view.findViewById<LinearLayout>(R.id.chatList)
 
-        val chats = listOf(
+        val chats = mutableListOf(
             Triple("Alice", "Hey, how are you?", "14:32"),
             Triple("Bob", "See you tomorrow!", "13:10"),
             Triple("Charlie", "Typing...", "12:58")
         )
+        val mainActivity = requireActivity() as? MainActivity
+        mainActivity?.pendingDeepLink?.let { uri: Uri ->
+            // Clear immediately
+            mainActivity.pendingDeepLink = null
+            Log.d("DeepLink", "DeepLink Found")
+            if (uri.scheme == "oblivion" && uri.host == "add") {
+                val base64UserId = uri.lastPathSegment
+                Log.d("DeepLink", "Scheme matches $base64UserId")
+                if (base64UserId != null) {
+                    try {
+                        chats.add(Triple(base64UserId, "Hello!", "14:32"))
+                    } catch (e: IllegalArgumentException) {
+                        Log.d("DeepLink", "Invalid base64 in link: $base64UserId", e)
+
+                    }
+                }
+            }
+        }
+
 
         val avatarBackgrounds = listOf(
             R.drawable.avatar_background,
