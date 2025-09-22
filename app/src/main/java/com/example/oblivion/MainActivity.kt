@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadFragment(ProfileMenuFragment())
-
         askNotificationPermission()
         FirebaseMessaging.getInstance().token
             .addOnCompleteListener { task ->
@@ -87,7 +85,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         val dbPath = this.getDatabasePath("storage.db").absolutePath
-        RustBridge.init(dbPath, callback)
+        val res = RustBridge.init(dbPath, callback)
+        Log.d("RUST", "Init returned: $res")
+        loadFragment(ProfileMenuFragment())
         handleIntent(intent)
     }
     override fun onNewIntent(intent: Intent) {

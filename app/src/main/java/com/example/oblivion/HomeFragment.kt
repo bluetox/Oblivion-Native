@@ -57,6 +57,8 @@ class HomeFragment : Fragment() {
                 if (base64UserId != null) {
                     try {
                         chats.add(Triple(base64UserId, "Hello!", "14:32"))
+                        val res = RustBridge.createChat("base64UserId", "DeeplinkChat")
+                        Log.d("RUST", "CreatedChat status: $res")
                     } catch (e: IllegalArgumentException) {
                         Log.d("DeepLink", "Invalid base64 in link: $base64UserId", e)
 
