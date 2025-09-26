@@ -110,5 +110,20 @@ class HomeFragment : Fragment() {
             chatList.addView(chatItem)
 
         }
+        val addBtn: View = view.findViewById(R.id.addChatButton)
+        addBtn.setOnClickListener {
+            // handle click
+            Log.d("Handle", "Clicked add chat")
+            parentFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left,
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+                )
+                .replace(R.id.fragment_container, AddChatFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 }
