@@ -4,8 +4,6 @@ import android.util.Base64
 data class Profile(
     val user_id: String,   // base64 encoded
     val username: String,
-    val seed: String,      // base64 encoded
-    val pwd_hash: String,  // base64 encoded
     val created_at: String
 ) {
 }
@@ -17,4 +15,7 @@ object RustBridge {
 
     external fun createChat(dst_user_id: String, chat_name: String): Int
     external fun getChats(): String
+    external fun getCurrentProfile(): String
+
+    external fun sendMessage(dst_user_id: String, message: String): Int
 }

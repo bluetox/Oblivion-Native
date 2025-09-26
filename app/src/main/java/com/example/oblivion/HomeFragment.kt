@@ -92,7 +92,7 @@ class HomeFragment : Fragment() {
                         R.anim.slide_in_left,
                         R.anim.slide_out_right
                     )
-                    .replace(R.id.fragment_container, ChatFragment())
+                    .replace(R.id.fragment_container, ChatFragment.newInstance(chat.dest_id_b64))
                     .addToBackStack(null)
                     .commit()
             }

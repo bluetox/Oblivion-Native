@@ -60,10 +60,15 @@ class ChatAdapter(private val messages: MutableList<Message>) :
 
 // ChatFragment
 class ChatFragment : Fragment(), MessageListener {
-
+    private var destId: String? = null
     private lateinit var adapter: ChatAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var messageInput: EditText
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        destId = arguments?.getString(ARG_DEST_ID)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         inflater.inflate(R.layout.fragment_chat, container, false)
@@ -93,11 +98,13 @@ class ChatFragment : Fragment(), MessageListener {
         messageInput = view.findViewById(R.id.messageEditText)
         view.findViewById<ImageView>(R.id.sendButton).setOnClickListener {
             val text = messageInput.text.toString().trim()
+            val id = destId ?: return@setOnClickListener
             if (text.isNotEmpty()) {
                 addMessage(text, true)
                 messageInput.text.clear()
 
-                // Example auto-reply
+                val res = RustBridge.sendMessage(id, text)
+                Log.d("RES_RUST", "$res")
                 addMessage("Received: $text", false)
             }
         }
@@ -121,5 +128,14 @@ class ChatFragment : Fragment(), MessageListener {
         val msg = Message(text, isSent)
         adapter.addMessage(msg)
         recyclerView.scrollToPosition(adapter.itemCount - 1)
+    }
+    companion object {
+        private const val ARG_DEST_ID = "dest_id"
+
+        fun newInstance(destId: String) = ChatFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_DEST_ID, destId)
+            }
+        }
     }
 }
