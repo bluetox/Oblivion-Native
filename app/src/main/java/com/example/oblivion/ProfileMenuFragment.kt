@@ -80,10 +80,8 @@ class ProfileMenuFragment : Fragment() {
         val recycler = view.findViewById<RecyclerView>(R.id.rvProfiles)
         val btnCreate = view.findViewById<Button>(R.id.btnCreate)
 
-        // Get JSON from Rust
         val json: String = RustBridge.getProfiles()
 
-        // Parse JSON into Kotlin objects
         val type = object : com.google.gson.reflect.TypeToken<List<Profile>>() {}.type
         val profiles: List<Profile> = com.google.gson.Gson().fromJson(json, type)
 
@@ -94,7 +92,6 @@ class ProfileMenuFragment : Fragment() {
             noProfilesText.visibility = View.GONE
             recycler.visibility = View.VISIBLE
 
-            // Calculate span count based on screen width
             val displayMetrics = resources.displayMetrics
             val dpWidth = displayMetrics.widthPixels / displayMetrics.density
             val scalingFactor = 160f

@@ -63,24 +63,24 @@ class AddChatFragment : Fragment() {
             bottomSheetDialog.setContentView(sheetView)
             bottomSheetDialog.show()
 
-            // Récupère les références des vues à partir de sheetView
+            
             val usernameEditText = sheetView.findViewById<EditText>(R.id.username)
             val userIdEditText = sheetView.findViewById<EditText>(R.id.userId)
             val createContact = sheetView.findViewById<Button>(R.id.createContact)
 
             createContact.setOnClickListener {
-                // Récupère le texte entré par l’utilisateur
+                
                 val username = usernameEditText.text.toString().trim()
                 val base64UserId = userIdEditText.text.toString().trim()
 
-                // Ici tu peux utiliser username et userId comme tu veux
-                // Par exemple :
+                
+                
                 if (base64UserId.isNotEmpty()) {
-                    // Traiter les données (ex: ajouter le contact à une liste ou une base de données)
+                    
                     val decodedUserId = String(android.util.Base64.decode(base64UserId, android.util.Base64.DEFAULT))
                     Log.d("DeepLink", "Calling native")
                     val res = RustBridge.createChat(base64UserId, username)
-                    bottomSheetDialog.dismiss() // Fermer la fenêtre si besoin
+                    bottomSheetDialog.dismiss() 
                     parentFragmentManager.beginTransaction()
                         .setCustomAnimations(
                             R.anim.slide_in_left,

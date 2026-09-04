@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-// Data class for a chat message
+
 data class Message(val text: String, val isSent: Boolean)
 
-// RecyclerView Adapter
+
 class ChatAdapter(private val messages: MutableList<Message>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -58,7 +58,7 @@ class ChatAdapter(private val messages: MutableList<Message>) :
     }
 }
 
-// ChatFragment
+
 class ChatFragment : Fragment(), MessageListener {
     private var destId: String? = null
     private lateinit var adapter: ChatAdapter
@@ -76,7 +76,7 @@ class ChatFragment : Fragment(), MessageListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Back button
+        
         view.findViewById<ImageView>(R.id.arrowBackIcon).setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(
@@ -88,13 +88,13 @@ class ChatFragment : Fragment(), MessageListener {
                 .commit()
         }
 
-        // RecyclerView setup
+        
         recyclerView = view.findViewById(R.id.chatRecyclerView)
         adapter = ChatAdapter(mutableListOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
 
-        // Message input
+        
         messageInput = view.findViewById(R.id.messageEditText)
         view.findViewById<ImageView>(R.id.sendButton).setOnClickListener {
             val text = messageInput.text.toString().trim()
@@ -109,17 +109,15 @@ class ChatFragment : Fragment(), MessageListener {
             }
         }
 
-        // Register fragment as active listener
+        
         (activity as? MainActivity)?.setMessageListener(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Unregister listener when fragment is destroyed
         (activity as? MainActivity)?.setMessageListener(null)
     }
 
-    // Called by MainActivity when Rust sends a new message
     override fun onMessage(message: String) {
         addMessage(message, false)
     }

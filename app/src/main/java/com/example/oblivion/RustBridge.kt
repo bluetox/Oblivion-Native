@@ -2,7 +2,7 @@ package com.example.oblivion
 import android.util.Base64
 
 data class Profile(
-    val user_id: String,   // base64 encoded
+    val user_id: String,
     val username: String,
     val created_at: String
 ) {

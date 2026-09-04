@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val settingsIcon = view.findViewById<View>(R.id.chatIcon) // still ImageView in XML
+        val settingsIcon = view.findViewById<View>(R.id.chatIcon)
         settingsIcon.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(
@@ -50,7 +50,6 @@ class HomeFragment : Fragment() {
         val mainActivity = requireActivity() as? MainActivity
 
         mainActivity?.pendingDeepLink?.let { uri: Uri ->
-            // Clear immediately
             mainActivity.pendingDeepLink = null
             Log.d("DeepLink", "DeepLink Found: $uri")
 
@@ -78,7 +77,6 @@ class HomeFragment : Fragment() {
         val avatarBackgrounds = listOf(
             R.drawable.avatar_background,
         )
-        // Parse JSON into Kotlin objects
         val type = object : com.google.gson.reflect.TypeToken<List<ChatExport>>() {}.type
         val chats: List<ChatExport> = com.google.gson.Gson().fromJson(json, type)
         for (chat in chats) {
@@ -98,10 +96,9 @@ class HomeFragment : Fragment() {
             }
 
             chatItem.findViewById<TextView>(R.id.chatName).text = chat.name
-            chatItem.findViewById<TextView>(R.id.chatMessage).text = "No messages yet"  // placeholder
-            chatItem.findViewById<TextView>(R.id.chatTime).text = "" // or format last message time
+            chatItem.findViewById<TextView>(R.id.chatMessage).text = "No messages yet"
+            chatItem.findViewById<TextView>(R.id.chatTime).text = ""
 
-            // Avatar
             val avatarContainer = chatItem.findViewById<FrameLayout>(R.id.chatAvatar)
             val avatarLetter = chatItem.findViewById<TextView>(R.id.chatAvatarLetter)
             avatarLetter.text = chat.name.first().uppercase()
@@ -112,7 +109,6 @@ class HomeFragment : Fragment() {
         }
         val addBtn: View = view.findViewById(R.id.addChatButton)
         addBtn.setOnClickListener {
-            // handle click
             Log.d("Handle", "Clicked add chat")
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(

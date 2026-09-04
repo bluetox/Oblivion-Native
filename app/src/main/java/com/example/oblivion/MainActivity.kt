@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                // FCM SDK (and your app) can post notifications
                 Toast.makeText(this, "Notifications enabled ✅", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Notifications disabled ❌", Toast.LENGTH_SHORT).show()
@@ -44,13 +43,10 @@ class MainActivity : AppCompatActivity() {
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED -> {
-                    // Already granted
                 }
                 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                    // TODO: show educational UI here before calling requestPermissionLauncher.launch()
                 }
                 else -> {
-                    // Directly request the permission
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
